@@ -16,13 +16,13 @@ const app = new Hono<{
   Bindings: Env
 }>()
 
-app.use('*', async (c, next) => {
-  setExternalSecretKey(env(c).EXTERNAL_SECRET_KEY)
-  await next()
-})
-
-app.get('/', (c) => {
-  return c.text(__EXTERNAL_SECRET_KEY__)
-})
+app
+  .use('*', async (c, next) => {
+    setExternalSecretKey(env(c).EXTERNAL_SECRET_KEY)
+    await next()
+  })
+  .get('/', (c) => {
+    return c.text(__EXTERNAL_SECRET_KEY__) // abc
+  })
 
 export default app
